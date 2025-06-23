@@ -39,7 +39,7 @@ The system runs images through **Tesseract** for fast, local OCR then sends to *
 2. **Install dependencies:**
 
    ```bash
-   uv add .
+   uv add
    ```
 
 3. **Set up environment variables:**
