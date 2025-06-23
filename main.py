@@ -1,42 +1,68 @@
-from src.utils.ocr import ocr_page
 from pathlib import Path
-from src.utils.llm import gemini_extract
-from src.utils.llm import cv_to_base64_png
-from src.models import DrivingLicense, shop_receipt
 
-path = Path("/Users/pushkar1713/Projects/firstwork-assignment/Drivers_license/generated_license_1071.png")
+import typer
+from rich import print
 
-ans = ocr_page(path)
-print(ans[0])
-print("confidence", ans[1])
+import src.pipeline as pipeline
 
-cv_img_b64 = cv_to_base64_png(ans[2])
+DOC_TYPES = ["receipt", "licence", "resume"]
 
-new_ans = gemini_extract(
-    cv_img_b64=cv_img_b64,
-    ocr_text=ans[0],
-    pydantic_model=DrivingLicense,
-)
-
-print(new_ans.model_dump_json(indent=2))
-
-shop_ans = ocr_page(Path("/Users/pushkar1713/Projects/firstwork-assignment/shop_receipts/10.jpg"))
-print(shop_ans[0])
-print("confidence", shop_ans[1])
-
-shop_cv_img_b64 = cv_to_base64_png(shop_ans[2])
-
-shop_new_ans = gemini_extract(
-    cv_img_b64=shop_cv_img_b64,
-    ocr_text=shop_ans[0],
-    pydantic_model=shop_receipt,
-)
-print(shop_new_ans.model_dump_json(indent=2))
+app = typer.Typer(add_completion=False, help="Hybrid OCR-LLM extractor")
 
 
-def main():
-    print("Hello from firstwork-assignment!")
+@app.command("run")
+def run(
+    doc_type: str = typer.Option(
+        ...,
+        "--type",
+        "-t",
+        prompt=f"Document type ({', '.join(DOC_TYPES)})",
+        case_sensitive=False,
+        show_choices=False,
+    ),
+    path: Path = typer.Option(
+        ...,
+        "--path",
+        "-p",
+        prompt="Path to file or folder",
+        exists=True,
+        file_okay=True,
+        dir_okay=True,
+    ),
+    out_dir: Path = typer.Option(
+        Path("./output"),
+        "--out",
+        "-o",
+        help="Destination for JSON files",
+    ),
+):
+    doc_type = doc_type.lower()  # type: ignore[arg-type]
+    if doc_type not in DOC_TYPES:
+        print(f"[red]✖ Unsupported type '{doc_type}'. Choose from {DOC_TYPES}.[/red]")
+        raise typer.Exit(1)
+
+    path, out_dir = path.resolve(), out_dir.resolve()
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"[bold cyan]▶ Extracting {doc_type}[/bold cyan]")
+    print(f"Source : {path}")
+    print(f"Output : {out_dir}\n")
+
+    try:
+        if path.is_file():
+            models = pipeline.process_document(path, doc_type)
+            pipeline.save_outputs(models, (out_dir / path.stem).as_posix())
+            print(f"[green]✓ {len(models)} page(s) processed[/green]")
+        else:
+            pipeline.process_folder(
+                root=path,
+                out_dir=out_dir,
+                doc_type=doc_type,
+            )
+    except Exception as err:
+        print(f"[red]✖ Error: {err}[/red]")
+        raise typer.Exit(1)
 
 
 if __name__ == "__main__":
-    main()
+    app()
