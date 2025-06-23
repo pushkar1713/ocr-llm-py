@@ -1,0 +1,23 @@
+{
+  "merchant_name": "Walmart",
+  "total_amount": "23.19",
+  "date_of_purchase": "2017-11-13",
+  "items": [
+    {
+      "name": "6 WING PLATE",
+      "quantity": 1,
+      "price": "3.98"
+    },
+    {
+      "name": "ASST 27",
+      "quantity": 1,
+      "price": "4.88"
+    },
+    {
+      "name": "CUTIE CAR",
+      "quantity": 1,
+      "price": "12.88"
+    }
+  ],
+  "payment_method": "DEBIT"
+}

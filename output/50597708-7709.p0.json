@@ -1,0 +1,67 @@
+{
+  "name": "Ih-Chang Hsu",
+  "email": "not_provided@example.com",
+  "phone": "",
+  "skills": [],
+  "education": [
+    {
+      "institution_name": "Kaohsiung Medical College",
+      "degree": "B.S.",
+      "graduation_year": 1964
+    },
+    {
+      "institution_name": "National Taiwan University",
+      "degree": "M.S.",
+      "graduation_year": 1967
+    },
+    {
+      "institution_name": "University of Wisconsin",
+      "degree": "Ph.D.",
+      "graduation_year": 1972
+    }
+  ],
+  "experience": [
+    {
+      "company_name": "Department of Biochemistry, University of Wisconsin, Madison, Wisconsin",
+      "role": "Research Assistant",
+      "start_date": "1968-01-01",
+      "end_date": "1972-12-31"
+    },
+    {
+      "company_name": "Department of Pathology, University of Wisconsin, Madison, Wisconsin",
+      "role": "Research Associate",
+      "start_date": "1972-01-01",
+      "end_date": "1975-12-31"
+    },
+    {
+      "company_name": "Oak Ridge National Laboratory, Biology Division",
+      "role": "Research Fellow in Cancer Program",
+      "start_date": "1975-01-01",
+      "end_date": "1977-12-31"
+    },
+    {
+      "company_name": "National Cancer Institute, National Institutes of Health, Bethesda, Maryland",
+      "role": "Expert Investigator, Division of Cancer Cause and Prevention",
+      "start_date": "1977-01-01",
+      "end_date": "1981-12-31"
+    },
+    {
+      "company_name": "Department of Pathology, University of Maryland School of Medicine, Baltimore, Maryland",
+      "role": "Associate Professor",
+      "start_date": "1981-01-01",
+      "end_date": "9999-12-31"
+    },
+    {
+      "company_name": "University of Maryland Cancer Center, University of Maryland Medical System, Baltimore, Maryland",
+      "role": "Member",
+      "start_date": "1984-01-01",
+      "end_date": "9999-12-31"
+    },
+    {
+      "company_name": "Laboratory of Human Carcinogenesis, NCI, NIH, Bethesda, Maryland",
+      "role": "Visiting Scientist (IPA appointment)",
+      "start_date": "1988-01-01",
+      "end_date": "1989-06-30"
+    }
+  ]
+}
